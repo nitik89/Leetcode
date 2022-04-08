@@ -9,7 +9,7 @@ public:
             // cout<<x[0]<<" "<<x[1]<<"\n";
             mp[x[0]].push_back({x[1],x[2]});
         }
-        priority_queue<pair<int,int>>q;
+        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>> q;
         vector<int>time(n+1,INT_MAX);
          q.push({0,k});
         time[k]=0;

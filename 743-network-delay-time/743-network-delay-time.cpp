@@ -12,20 +12,17 @@ public:
         priority_queue<pair<int,int>>q;
         vector<int>time(n+1,INT_MAX);
          q.push({0,k});
+        time[k]=0;
         
         while(!q.empty()){
             int x=q.top().first;
             int y=q.top().second;
             q.pop();
             // cout<<y<<" ";
-            if(x<time[y]){
-                time[y]=x;
-            }
-            else{
-                continue;
-            }
+          
             for(auto z:mp[y]){
                 if(x+z.second<time[z.first]){
+                    time[z.first]=x+z.second;
                  q.push({x+z.second,z.first});
             }
                

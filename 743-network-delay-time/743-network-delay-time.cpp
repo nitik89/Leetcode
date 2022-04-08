@@ -1,45 +1,46 @@
 class Solution {
 public:
     int networkDelayTime(vector<vector<int>>& times, int n, int k) {
-        if (n == 0) return 0;
-
-        unordered_map<int, vector<pair<int, int>>> graph;
-        for (vector<int> &time: times) {
-            int u = time[0], v = time[1], w = time[2];
-            graph[u].push_back({ v, w });
+        if(n==0){
+            return 0;
         }
-
-        vector<int> dist(n + 1, INT_MAX);
-        dist[k] = 0;
-
-        auto comparator = [](auto a, auto b) {
-            return a.second > b.second;
-        };
-
-        priority_queue<
-            pair<int, int>,
-            vector<pair<int, int>>,
-            decltype(comparator)
-        > pq(comparator);
-
-        pq.push({ k, 0 });
+        vector<vector<pair<int,int>>>mp(n+1);
+        for(auto x:times){
+            // cout<<x[0]<<" "<<x[1]<<"\n";
+            mp[x[0]].push_back({x[1],x[2]});
+        }
+        priority_queue<pair<int,int>>q;
+        vector<int>time(n+1,INT_MAX);
+         q.push({0,k});
         
-        while (pq.size()) {
-            auto [node, weight] = pq.top();
-            pq.pop();
-
-            for (auto [neigh, edgeWeight]: graph[node]) {
-                if (weight + edgeWeight < dist[neigh]) {
-                    dist[neigh] = weight + edgeWeight;
-                    pq.push({ neigh, dist[neigh] });
-                }
+        while(!q.empty()){
+            int x=q.top().first;
+            int y=q.top().second;
+            q.pop();
+            // cout<<y<<" ";
+            if(x<time[y]){
+                time[y]=x;
+            }
+            else{
+                continue;
+            }
+            for(auto z:mp[y]){
+                if(x+z.second<time[z.first]){
+                 q.push({x+z.second,z.first});
+            }
+               
             }
         }
-
-        for (int i = 1; i < dist.size(); i++) {
-            if (dist[i] == INT_MAX) return -1;
-        }
-
-        return *max_element(dist.begin() + 1, dist.end());
+        int mx=INT_MIN;
+       for(int i=0;i<n;i++){
+           // cout<<time[i+1]<<" ";
+           if(time[i+1]==INT_MAX){
+               return -1;
+           }
+           else{
+               mx=max(mx,time[i+1]);
+           }
+       }
+        return mx;
     }
 };

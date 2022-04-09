@@ -1,87 +1,53 @@
+class compare
+{
+    public:
+    bool operator()(pair<int,pair<int,int>>&a, pair<int,pair<int,int>>&b)
+    {
+        return (a.first > b.first);
+    }
+};
 class Solution {
 public:
-    int minCost(vector<vector<int>>& grid) {
-        int n=grid.size(),m=grid[0].size();
-        int dist[n][m];
-            // int dist[m][n];
-        int max=1e9;
-    for (int i = 0; i < n; i++) {
-
-        for (int j = 0; j < m; j++) {
-            dist[i][j] = max;
+    int minCost(vector<vector<int>>&A) {
+        int m = A.size();
+        int n = A[0].size();
+        priority_queue<pair<int,pair<int,int>>, vector<pair<int,pair<int,int>>>,compare >pq;
+        vector<vector<int>>D(m,vector<int>(n,INT_MAX));
+        D[m - 1][n - 1] = 0;
+        pq.push({0,{m - 1,n - 1}});
+        int dx[] = {0,0,-1,1};
+        int dy[] = {-1,1,0,0};
+        while(!pq.empty())
+        {
+            pair<int,pair<int,int>>node = pq.top();
+            pq.pop();
+            int x = node.second.first;
+            int y = node.second.second;
+            int dis = node.first;
+            if(x == 0 and y == 0)
+                return dis;
+            if(dis > D[x][y])
+                continue;
+            int dir = 1;
+            for(int k = 0; k < 4; k++)
+            {
+                int i = x + dx[k];
+                int j = y + dy[k];
+                int change = 0;
+                if(i >= 0 and i < m and j >= 0 and j < n)
+                {
+                    change = (A[i][j] == dir) ? 0 : 1;
+                    if(dis + change < D[i][j])
+                    {
+                        D[i][j] = dis + change;
+                        pq.push({D[i][j],{i,j}});
+                    }
+                }
+                dir++;
+            }
+            
         }
-    }
-
+        return INT_MAX;
         
-        queue<pair<int,int>>q;
-        dist[0][0]=0;
-        q.push({0,0});
-        while(!q.empty()){
-            int i=q.front().first;
-            int j=q.front().second;
-            // cout<<i<<" "<<j<<" "<<dist[i][j]<<"\n";
-            q.pop();
-            if(j+1<m){
-             if(grid[i][j]==1){
-                 if(dist[i][j]<dist[i][j+1]){
-                     dist[i][j+1]=dist[i][j];
-                     q.push({i,j+1});
-                 }
-             }   
-             else{
-                 if(dist[i][j]+1<dist[i][j+1]){
-                     dist[i][j+1]=dist[i][j]+1;
-                     q.push({i,j+1});
-                 }
-                 
-             }
-            }
-            if(j-1>=0){
-                 if(grid[i][j]==2){
-                 if(dist[i][j]<dist[i][j-1]){
-                     dist[i][j-1]=dist[i][j];
-                     q.push({i,j-1});
-                 }
-             }   
-             else{
-                 if(dist[i][j]+1<dist[i][j-1]){
-                     dist[i][j-1]=dist[i][j]+1;
-                     q.push({i,j-1});
-                 }
-                 
-             }
-            }
-            if(i+1<n){
-                 if(grid[i][j]==3){
-                 if(dist[i][j]<dist[i+1][j]){
-                     dist[i+1][j]=dist[i][j];
-                     q.push({i+1,j});
-                 }
-             }   
-             else{
-                 if(dist[i][j]+1<dist[i+1][j]){
-                     dist[i+1][j]=dist[i][j]+1;
-                     q.push({i+1,j});
-                 }
-                 
-             }
-            }
-            if(i-1>=0){
-                 if(grid[i][j]==4){
-                 if(dist[i][j]<dist[i-1][j]){
-                     dist[i-1][j]=dist[i][j];
-                     q.push({i-1,j});
-                 }
-             }   
-             else{
-                 if(dist[i][j]+1<dist[i-1][j]){
-                     dist[i-1][j]=dist[i][j]+1;
-                     q.push({i-1,j});
-                 }
-                 
-             }
-            }
-        }
-        return dist[n-1][m-1];
     }
 };

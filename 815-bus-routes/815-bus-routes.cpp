@@ -18,6 +18,8 @@ public:
         queue<pair<int,int>>q;
         q.push({source,0});
         unordered_set<int>seen;
+                unordered_set<int>bus;
+
         // seen.insert(0);
         int ans=-1;
         while(!q.empty()){
@@ -27,14 +29,16 @@ public:
             if(node==target){
                 return x;
             }
-            for(auto y:mp[node]){
-                for(auto m:routes[y]){
+            for(auto y:mp[node]){//loop on the buses of that node
+                if(bus.find(y)==bus.end()){
+                for(auto m:routes[y]){ //now all the unvisited routes of that bus
                     if(seen.find(m)==seen.end()){
                         seen.insert(m);
                         q.push({m,x+1});
                     }
                 }
-                routes[y].clear();
+               bus.insert(y);
+                }
             }
             
         }

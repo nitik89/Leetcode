@@ -18,6 +18,7 @@ public:
         queue<pair<int,int>>q;
         q.push({source,0});
         unordered_set<int>seen;
+        // seen.insert(0);
         int ans=-1;
         while(!q.empty()){
             int node=q.front().first;
@@ -33,6 +34,7 @@ public:
                         q.push({m,x+1});
                     }
                 }
+                routes[y].clear();
             }
             
         }

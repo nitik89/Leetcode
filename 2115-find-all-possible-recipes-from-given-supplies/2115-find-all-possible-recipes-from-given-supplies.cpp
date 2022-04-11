@@ -15,7 +15,9 @@ public:
         }
         queue<string>q;
         for(auto x:supplies){
+            if(indeg[x]==0){
             q.push(x);
+            }
         }
         vector<string>ans;
         while(!q.empty()){

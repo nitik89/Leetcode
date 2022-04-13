@@ -27,7 +27,7 @@ public:
         
         m--;
         }
-            if(j<=n){
+      if(j<=n){
         int p=m;
         while(p>=i){
             vec[p][j]=++nm;

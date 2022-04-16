@@ -2,7 +2,7 @@ class ATM {
 public:
     unordered_map<int,long long>mp;
     vector<int>vec{20,50,100,200,500};
-    priority_queue<pair<int,int>>pq;
+    // priority_queue<pair<int,int>>pq;
     ATM() {
        
     }

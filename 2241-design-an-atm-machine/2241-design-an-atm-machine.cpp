@@ -16,10 +16,10 @@ public:
     }
     
     vector<int> withdraw(int amount) {
-        
+        priority_queue<pair<int,int>>temp;
         vector<int>ans(5,0);
         for(int i=vec.size()-1;i>=0;i--){
-            long long mxnotes=min((long long)mp[vec[i]],(long long)amount/vec[i]);
+            long long mxnotes=min((long long)amount/vec[i],mp[vec[i]]);
             if(mp[vec[i]]>=mxnotes&&mp[vec[i]]>0){
                 mp[vec[i]]-=mxnotes;
                 amount-=vec[i]*mxnotes;

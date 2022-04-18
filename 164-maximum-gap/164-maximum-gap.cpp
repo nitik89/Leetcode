@@ -9,7 +9,7 @@ public:
       int mx=*max_element(nums.begin(),nums.end());
         
       int n=nums.size();
-      vector<pair<int,int>>bucket(n,{INT_MAX,INT_MIN}); //mn and mx
+      vector<pair<int,int>>bucket(n-1,{INT_MAX,INT_MIN}); //mn and mx
       int intervals=(mx-mn)/(n-1)+1;
         // cout<<intervals<<" ";
         

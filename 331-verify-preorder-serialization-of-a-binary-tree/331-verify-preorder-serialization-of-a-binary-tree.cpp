@@ -23,13 +23,13 @@ public:
             stk.pop();
             string a="";
             while(i<n&&preorder[i]!=','){
-                a+=preorder[i++];
+                a.push_back(preorder[i++]);
             }
             string b="";
             i++;
             // cout<<i<<" ";
             while(i<n&&preorder[i]!=','){
-                b+=preorder[i++];
+                b.push_back(preorder[i++]);
             }
             // cout<<a<<" --- "<<b<<"\n";
             if(a==""||b==""){

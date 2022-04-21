@@ -1,27 +1,36 @@
 class MyHashSet {
 public:
-    int vec[1000001];
+    vector<list<int>> m;
+    int siz;
     MyHashSet() {
-        memset(vec,0,sizeof vec);
+        siz=100;
+        m.resize(siz);
+    }
+    int hash(int key)
+    {
+        return key%siz;
+    }
+    list<int>:: iterator search(int key)
+    {
+        int i=hash(key);
+        return find(m[i].begin(),m[i].end(),key);
     }
     
     void add(int key) {
-        vec[key]=1;
+        if(contains(key)) return;
+        int i=hash(key);
+        m[i].push_back(key);
     }
     
     void remove(int key) {
-        vec[key]=0;
+        if(!contains(key)) return;
+        int i=hash(key);
+        m[i].erase(search(key));
     }
     
     bool contains(int key) {
-        return vec[key]==1;
+        int i=hash(key);
+        if(search(key) !=m[i].end()) return true;
+        else return false;
     }
 };
-
-/**
- * Your MyHashSet object will be instantiated and called as such:
- * MyHashSet* obj = new MyHashSet();
- * obj->add(key);
- * obj->remove(key);
- * bool param_3 = obj->contains(key);
- */

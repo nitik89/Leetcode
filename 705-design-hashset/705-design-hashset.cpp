@@ -10,9 +10,9 @@ class Node{
 class MyHashSet {
 public:
     vector<Node*>vec;
-    int sz=101;
+    int sz=1001;
     MyHashSet() {
-        vec.resize(101,NULL);
+        vec.resize(1001,NULL);
     }
     int getIdx(int k){
         return k%sz;

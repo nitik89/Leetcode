@@ -1,8 +1,8 @@
 class MyHashSet {
 public:
-    vector<int>vec;
+    int vec[1000001];
     MyHashSet() {
-        vec.resize(1e6+1,0);
+        memset(vec,0,sizeof vec);
     }
     
     void add(int key) {

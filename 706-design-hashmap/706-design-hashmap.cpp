@@ -11,7 +11,7 @@ class Node{
 };
 class MyHashMap {
 public:
-    int sz=1001;
+    int sz=101;
     vector<Node*>vec;
     MyHashMap() {
         vec.resize(1001,NULL);

@@ -1,28 +1,28 @@
 class Solution {
 public:
     
-    map<pair<int,pair<int,int>>,int>mp;
+    map<pair<int,int>,int>mp;
     bool getAns(int finalbit,int currbit,int csum,vector<int>&nums,int k,int target,int count){
        if(currbit==finalbit){
           
            return count==k;
        }
-        if(mp.find({currbit,{csum,count}})!=mp.end()){
-            return mp[{currbit,{csum,count}}];
+        if(mp.find({currbit,count})!=mp.end()){
+            return mp[{currbit,count}];
         }
         for(int i=0;i<nums.size();i++){
             if(nums[i]+csum==target&&(((1<<i)&currbit)!=(1<<i))){
                if(getAns(finalbit,currbit|(1<<i),0,nums,k,target,count+1)){
-                   return mp[{currbit,{csum,count}}]=true;
+                   return mp[{currbit,count}]=true;
                }
             }
             else if(nums[i]+csum<target&&(((1<<i)&currbit)!=(1<<i))){
                  if(getAns(finalbit,currbit|(1<<i),csum+nums[i],nums,k,target,count)){
-                     return mp[{currbit,{csum,count}}]=true;
+                     return mp[{currbit,count}]=true;
                  }
             }
         }
-        return mp[{currbit,{csum,count}}]=false;
+        return mp[{currbit,count}]=false;
        
     }
     bool canPartitionKSubsets(vector<int>& nums, int k) {

@@ -23,6 +23,9 @@ public: vector<int>sm;
                 }
                 sm[i]-=nums[idx];
             }
+            if(sm[i]==0){
+                return false;
+            }
             
            
                 

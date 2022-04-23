@@ -1,28 +1,36 @@
 class Solution {
 public:
-    
-    int dp[1<<17-1][17];
-    bool getAns(int finalbit,int currbit,int csum,vector<int>&nums,int k,int target,int count){
-       if(currbit==finalbit){
-          
-           return count==k;
-       }
-        if(dp[currbit][count]!=-1){
-            return dp[currbit][count];
+    vector<int>sm;
+    bool getAns(int finalbit,int currbit,vector<int>&nums,int k,int target,int idx){
+       
+        if(finalbit==currbit){
+            return true;
         }
-        for(int i=0;i<nums.size();i++){
-            if(nums[i]+csum==target&&(((1<<i)&currbit)!=(1<<i))){
-               if(getAns(finalbit,currbit|(1<<i),0,nums,k,target,count+1)){
-                   return dp[currbit][count]=true;
-               }
-            }
-            else if(nums[i]+csum<target&&(((1<<i)&currbit)!=(1<<i))){
-                 if(getAns(finalbit,currbit|(1<<i),csum+nums[i],nums,k,target,count)){
-                     return dp[currbit][count]=true;
-                 }
-            }
+         if(idx>=nums.size()){
+            return false;
         }
-        return dp[currbit][count]=false;
+        for(int i=0;i<sm.size();i++){
+            if(sm[i]+nums[idx]==target){
+                sm[i]+=nums[idx];
+                if(getAns(finalbit,currbit|(1<<i),nums,k,target,idx+1)){
+                    return true;
+                }
+                sm[i]-=nums[idx];
+            }
+            else if(sm[i]+nums[idx]<target){
+                sm[i]+=nums[idx];
+                if(getAns(finalbit,currbit,nums,k,target,idx+1)){
+                    return true;
+                }
+                sm[i]-=nums[idx];
+            }
+            
+           if(sm[i]==0){
+               return false;
+           }
+                
+        }
+        return false;
        
     }
     bool canPartitionKSubsets(vector<int>& nums, int k) {
@@ -31,13 +39,14 @@ public:
         for(auto x:nums){
             sum+=x;
         }
-        int finalbit=(1<<n)-1;
-      
+        int finalbit=(1<<k)-1;
+        sm.resize(k,0);
         int target=sum/k;
+        sort(nums.begin(),nums.end());
+        reverse(nums.begin(),nums.end());
         if(sum%k!=0){
             return false;
         }
-        memset(dp,-1,sizeof dp);
-        return getAns(finalbit,0,0,nums,k,target,0);
+        return getAns(finalbit,0,nums,k,target,0);
     }
 };

@@ -1,83 +1,64 @@
 class Solution {
+private:
+    void initialize(vector<int>& parent, vector<int>& rank, int n) {
+        for(int i=0; i<n; i++) {
+            rank[i] = 0;
+            parent[i] = i;
+        }
+    }
+    int find(vector<int>& parent, int x) {
+        if(x == parent[x]) return x;
+        return parent[x] = find(parent, parent[x]);
+    }
+    void _union(vector<int>& parent, vector<int>& rank, int x, int y) {
+        int x_rep = find(parent, x);
+        int y_rep = find(parent, y);
+        
+        if(x_rep == y_rep) return;
+        
+        if(rank[x_rep] < rank[y_rep]) parent[x_rep] = y_rep;
+        else if(rank[x_rep] > rank[y_rep]) parent[y_rep] = x_rep;
+        else {
+            parent[y_rep] = x_rep;
+            rank[x_rep]++;
+        }
+    }
 public:
-    
-    int cost(int i,int j,vector<vector<int>>& pt)
-    {
-        int ct = abs(pt[i][0]-pt[j][0]) + abs(pt[i][1]-pt[j][1]);
-        return ct;
-    }
-    
-    static bool cmp(pair<int,pair<int,int>>& a,pair<int,pair<int,int>>& b)
-    {
-        return a.second.second<b.second.second;
-    }
-    
-    int get(int a,vector<int>& par)
-    {
-        if(a==par[a])
-            return a;
+    int minCostConnectPoints(vector<vector<int>>& points) {
+        int n = points.size();
+        // Instead of sorting the edges, we are using a priority queue
+        priority_queue<vector<int>, vector<vector<int>>, greater<vector<int>>> edges;
+        vector<int> parent(n);
+        vector<int> rank(n);
+        initialize(parent, rank, n);
+        int ans = 0;
         
-        return par[a] = get(par[a],par);
-    }
-    
-    void uni(int a,int b,vector<int>& par,vector<int>& sz)
-    {
-        int u = get(a,par);
-        int v = get(b,par);
-        
-        if(u==v)
-            return;
-        
-        if(sz[u]<sz[v])
-            swap(u,v);
-        
-        par[v] = u;
-        sz[v] += sz[v];
-        
-        return;
-    }
-    
-    int minCostConnectPoints(vector<vector<int>>& pt) 
-    {
-        int n = pt.size(),ans = 0;
-        
-        vector<pair<int,pair<int,int>>> ar;
-        
-        for(int i=0;i<n;i++)
-        {
-            for(int j=i+1;j<n;j++)
-            {
-                int ct = cost(i,j,pt);
-                ar.push_back({i,{j,ct}});
+        for(int i=0; i<n; i++) {
+            int curr_x = points[i][0];
+            int curr_y = points[i][1];
+            
+            for(int j=i+1; j<n; j++) {
+                int next_x = points[j][0];
+                int next_y = points[j][1];
+                
+                int wt = abs(curr_x - next_x) + abs(curr_y - next_y);
+                edges.push({wt, i, j});
             }
         }
         
-        sort(ar.begin(),ar.end(),cmp);
-        
-        vector<int> par(n,-1);
-        vector<int> sz(n,1);
-        
-        for(int i=0;i<n;i++)
-        {
-            par[i] = i;
-            sz[i] = 1;
-        }
-        
-        for(int i=0;i<ar.size();i++)
-        {
-            int a = ar[i].first;
-            int b = ar[i].second.first;
-            int u = get(a,par);
-            int v = get(b,par);
+        int cnt = 0;
+        while(!edges.empty() && cnt < n-1) {
+            auto edge = edges.top();
+            edges.pop();
+            int x = find(parent, edge[1]);
+            int y = find(parent, edge[2]);
             
-            if(u == v)
-                continue;
-            
-            ans += ar[i].second.second;
-            uni(a,b,par,sz);
+            if(x != y) {
+                ans += edge[0];
+                _union(parent, rank, x, y);
+                cnt++;
+            }
         }
-        
         return ans;
-        
     }
 };

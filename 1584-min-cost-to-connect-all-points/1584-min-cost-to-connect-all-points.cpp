@@ -1,58 +1,83 @@
 class Solution {
 public:
-    vector<int>par;
-    vector<int>rank;
-    int findPar(int x){
-        if(par[x]==x){
-            return x;
-        }
-        int y=findPar(par[x]);
-        par[x]=y;
-        return y;
+    
+    int cost(int i,int j,vector<vector<int>>& pt)
+    {
+        int ct = abs(pt[i][0]-pt[j][0]) + abs(pt[i][1]-pt[j][1]);
+        return ct;
     }
-    bool _union(int i,int j){
-        int x=findPar(i);
-        int y=findPar(j);
-        if(x==y){
-            return false;
-        }
-        if(rank[x]>rank[y]){
-            par[y]=x;
-        }
-        else if(rank[y]>rank[x]){
-            par[x]=y;
-        }
-        else{
-            par[x]=y;
-            rank[y]++;
-        }
-        return true;
+    
+    static bool cmp(pair<int,pair<int,int>>& a,pair<int,pair<int,int>>& b)
+    {
+        return a.second.second<b.second.second;
     }
-    int minCostConnectPoints(vector<vector<int>>& points) {
-        int n=points.size();
-        vector<vector<int>>vec;
-        par.resize(n);
-        rank.resize(n);
-        for(int i=0;i<n;i++){
-            par[i]=i;
-            rank[i]=0;
-        }
-        for(int i=0;i<n;i++){
-            for(int j=i+1;j<n;j++){
-                if(i!=j){
-             vec.push_back({abs(points[i][0]-points[j][0])+abs(points[i][1]-points[j][1]),i,j});
-                }
+    
+    int get(int a,vector<int>& par)
+    {
+        if(a==par[a])
+            return a;
+        
+        return par[a] = get(par[a],par);
+    }
+    
+    void uni(int a,int b,vector<int>& par,vector<int>& sz)
+    {
+        int u = get(a,par);
+        int v = get(b,par);
+        
+        if(u==v)
+            return;
+        
+        if(sz[u]<sz[v])
+            swap(u,v);
+        
+        par[v] = u;
+        sz[v] += sz[v];
+        
+        return;
+    }
+    
+    int minCostConnectPoints(vector<vector<int>>& pt) 
+    {
+        int n = pt.size(),ans = 0;
+        
+        vector<pair<int,pair<int,int>>> ar;
+        
+        for(int i=0;i<n;i++)
+        {
+            for(int j=i+1;j<n;j++)
+            {
+                int ct = cost(i,j,pt);
+                ar.push_back({i,{j,ct}});
             }
         }
-        sort(vec.begin(),vec.end());
-        int cnt=0;
-        for(auto x:vec){
-            int i=x[1];
-            int j=x[2];
-            if(_union(i,j)){
-                cnt+=x[0];
-            }
+        
+        sort(ar.begin(),ar.end(),cmp);
+        
+        vector<int> par(n,-1);
+        vector<int> sz(n,1);
+        
+        for(int i=0;i<n;i++)
+        {
+            par[i] = i;
+            sz[i] = 1;
         }
-        return cnt;
+        
+        for(int i=0;i<ar.size();i++)
+        {
+            int a = ar[i].first;
+            int b = ar[i].second.first;
+            int u = get(a,par);
+            int v = get(b,par);
+            
+            if(u == v)
+                continue;
+            
+            ans += ar[i].second.second;
+            uni(a,b,par,sz);
+        }
+        
+        return ans;
+        
     }
 };

@@ -1,64 +1,62 @@
 class Solution {
-private:
-    void initialize(vector<int>& parent, vector<int>& rank, int n) {
-        for(int i=0; i<n; i++) {
-            rank[i] = 0;
-            parent[i] = i;
-        }
-    }
-    int find(vector<int>& parent, int x) {
-        if(x == parent[x]) return x;
-        return parent[x] = find(parent, parent[x]);
-    }
-    void _union(vector<int>& parent, vector<int>& rank, int x, int y) {
-        int x_rep = find(parent, x);
-        int y_rep = find(parent, y);
-        
-        if(x_rep == y_rep) return;
-        
-        if(rank[x_rep] < rank[y_rep]) parent[x_rep] = y_rep;
-        else if(rank[x_rep] > rank[y_rep]) parent[y_rep] = x_rep;
-        else {
-            parent[y_rep] = x_rep;
-            rank[x_rep]++;
-        }
-    }
 public:
+    vector<int>par;
+    vector<int>rank;
+    int findPar(int x){
+        if(par[x]==x){
+            return x;
+        }
+        int y=findPar(par[x]);
+        par[x]=y;
+        return y;
+    }
+    bool _union(int i,int j){
+        int x=findPar(i);
+        int y=findPar(j);
+        if(x==y){
+            return false;
+        }
+        if(rank[x]>rank[y]){
+            par[y]=x;
+        }
+        else if(rank[y]>rank[x]){
+            par[x]=y;
+        }
+        else{
+            par[x]=y;
+            rank[y]++;
+        }
+        return true;
+    }
     int minCostConnectPoints(vector<vector<int>>& points) {
-        int n = points.size();
-        // Instead of sorting the edges, we are using a priority queue
-        priority_queue<vector<int>, vector<vector<int>>, greater<vector<int>>> edges;
-        vector<int> parent(n);
-        vector<int> rank(n);
-        initialize(parent, rank, n);
-        int ans = 0;
-        
-        for(int i=0; i<n; i++) {
-            int curr_x = points[i][0];
-            int curr_y = points[i][1];
-            
-            for(int j=i+1; j<n; j++) {
-                int next_x = points[j][0];
-                int next_y = points[j][1];
-                
-                int wt = abs(curr_x - next_x) + abs(curr_y - next_y);
-                edges.push({wt, i, j});
+        int n=points.size();
+        // vector<vector<int>>vec;
+        par.resize(n);
+        rank.resize(n);
+        for(int i=0;i<n;i++){
+            par[i]=i;
+            rank[i]=0;
+        }
+        priority_queue <vector<int>, vector<vector<int>>, greater<vector<int>>>pq;
+        for(int i=0;i<n;i++){
+            for(int j=i+1;j<n;j++){
+                if(i!=j){
+             pq.push({abs(points[i][0]-points[j][0])+abs(points[i][1]-points[j][1]),i,j});
+                }
             }
         }
-        
-        int cnt = 0;
-        while(!edges.empty() && cnt < n-1) {
-            auto edge = edges.top();
-            edges.pop();
-            int x = find(parent, edge[1]);
-            int y = find(parent, edge[2]);
-            
-            if(x != y) {
-                ans += edge[0];
-                _union(parent, rank, x, y);
-                cnt++;
+          
+        int cnt=0,ans=0;
+       while(pq.size()>0&&ans < n-1){
+           vector<int>x=pq.top();
+           pq.pop();
+            int i=x[1];
+            int j=x[2];
+            if(_union(i,j)){
+                cnt+=x[0];
+                ans++;
             }
         }
-        return ans;
+        return cnt;
     }
 };

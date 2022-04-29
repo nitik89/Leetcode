@@ -9,24 +9,21 @@ public:
         dp[0]=1;
         mp[s[0]]=0;
         for(int i=1;i<s.size();i++){
-            long long sum=0;
-            if(mp.find(s[i])==mp.end()){
-                for(int j=0;j<i;j++){
-                    sum+=dp[j]%mod;
-                }
-                sum+=1;
-            }
-            else{
+            
+            dp[i]=(2*(dp[i-1]%mod)%mod)+1;
+            if(mp.find(s[i])!=mp.end()){
                 int idx=mp[s[i]];
-                for(int j=idx;j<i;j++){
-                    sum+=dp[j]%mod;
+                if(idx-1>=0){
+                dp[i]-=dp[idx-1];
+                    
                 }
+                dp[i]--;
             }
-            dp[i]=sum%mod;
+            dp[i]=(dp[i]+mod)%mod;
             mp[s[i]]=i;
-            ans=ans%mod+sum%mod;
         }
+        
        
-        return ans%mod;
+        return dp[s.size()-1];
     }
 };

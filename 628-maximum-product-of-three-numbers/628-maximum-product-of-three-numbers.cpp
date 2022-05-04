@@ -1,36 +1,40 @@
 class Solution {
 public:
-    int maximumProduct(vector<int>& nums) {
-        int mx1=INT_MIN,mx2=INT_MIN,mx3=INT_MIN;
-        int mn1=INT_MAX,mn2=INT_MAX,mn3=INT_MAX;
-        for(auto x:nums){
-            if(mx1<=x){
-                mx3=mx2;
-                mx2=mx1;
-                mx1=x;
-            }
-            else if(x>=mx2){
-                mx3=mx2;
-                mx2=x;
-                
-            }
-            else if(x>=mx3){
-                mx3=x;
-            }
-            
-            if(mn1>=x){
-                mn3=mn2;
-                mn2=mn1;
-                mn1=x;
-            }
-            else if(mn2>=x){
-                mn3=mn2;
-                mn2=x;
-            }
-            else if(mn3>=x){
-                mn3=x;
-            }
+
+int maximumProduct(vector<int>& nums)
+{
+    int n = nums.size();
+
+    int min1 = INT_MAX, min2 = INT_MAX;
+    int max1 = INT_MIN, max2 = INT_MIN, max3 = INT_MIN;
+
+    for(int i = 0; i < n; i++)
+    {
+        int val = nums[i];
+        if(val >= max1)
+        {
+            max3 = max2;
+            max2 = max1;
+            max1 = val;
         }
-        return max(mx1*mx2*mx3,mn1*mn2*mx1);
+        else if(val >= max2)
+        {
+            max3 = max2;
+            max2 = val;
+        }
+        else if(val >= max3)
+            max3 = val;
+
+        if(val <= min1)
+        {
+            min2 = min1;
+            min1 = nums[i];
+        }
+        else if(val <= min2)
+            min2 = val;
     }
+
+    return max(min1 * min2 * max1, max1 * max2 * max3);
+}
+
 };

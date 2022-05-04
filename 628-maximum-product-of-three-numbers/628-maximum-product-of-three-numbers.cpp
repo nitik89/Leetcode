@@ -31,6 +31,6 @@ public:
                 mn3=x;
             }
         }
-        return max({mx1*mx2*mx3,mn1*mn2*mx1});
+        return max(mx1*mx2*mx3,mn1*mn2*mx1);
     }
 };

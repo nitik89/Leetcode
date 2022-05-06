@@ -9,9 +9,10 @@ public:
         {
             if(prime[i])
             {
-                for(int j=2*i;j<=n;j+=i)
-                {
-                    prime[j]=false;
+                int t=2*i;
+                while(t<=n){
+                    prime[t]=false;
+                    t+=i;
                 }
             }
         }

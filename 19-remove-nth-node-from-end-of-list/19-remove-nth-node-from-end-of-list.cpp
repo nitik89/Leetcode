@@ -19,27 +19,23 @@ public:
         }
         ListNode* slow=head;
         ListNode* fast=head;
-      while(n!=1)
+      while(n!=0)
       {
           fast=fast->next;
           n--;
       }
-        ListNode* prev=NULL;
-        while(fast->next!=NULL&&slow!=NULL){
-            prev=slow;
-            slow=slow->next;
-            
-            fast=fast->next;
+        if(fast==NULL){
+            return head->next;
         }
-   if(prev==NULL){
-       head=head->next;
-   }
-        else{
-            
-        
-        prev->next=slow->next;
-        slow->next=NULL;
-        }
+        // cout<<fast->val<<" ";
+      while(fast->next!=NULL){
+          fast=fast->next;
+          slow=slow->next;
+      }
+        // cout<<fast->val<<" ";
+        ListNode* y=slow->next;
+      slow->next=slow->next->next;
+        delete y;
         return head;
     }
 };

@@ -1,6 +1,6 @@
 class Solution {
 public:
-    void getUnique(int c,int t,vector<int>nums,vector<int>temp,map<int,int>m,vector<vector<int>>&ans){
+    void getUnique(int c,int t,vector<int>nums,vector<int>temp,unordered_map<int,int>m,vector<vector<int>>&ans){
         if(c>t){
             ans.push_back(temp);
             return;
@@ -19,7 +19,7 @@ public:
     }
     vector<vector<int>> permuteUnique(vector<int>& nums) {
         vector<vector<int>>ans;
-        map<int,int>m;
+        unordered_map<int,int>m;
         for(int i=0;i<nums.size();i++){
             if(m.find(nums[i])==m.end()){
                 m[nums[i]]=-1;

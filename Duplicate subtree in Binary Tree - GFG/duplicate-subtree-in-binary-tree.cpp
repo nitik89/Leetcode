@@ -101,8 +101,8 @@ class Solution {
         string lf=getAns(root->left);
         string rgt=getAns(root->right);
         string my=lf+"."+to_string(root->data)+"."+rgt;
-        //  cout<<my<<"\n";
-        if(mp.find(my)!=mp.end()&&my.size()>10){
+        //   cout<<my<<"\n";
+        if(mp.find(my)!=mp.end()&&my.size()>8){
             yes=true;
         }
         mp[my]=1;

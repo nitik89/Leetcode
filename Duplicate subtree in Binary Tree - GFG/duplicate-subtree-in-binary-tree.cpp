@@ -100,7 +100,7 @@ class Solution {
         }
         string lf=getAns(root->left);
         string rgt=getAns(root->right);
-        string my=lf+"."+to_string(root->data)+"."+rgt;
+        string my=lf+"L"+to_string(root->data)+"R"+rgt;
         //   cout<<my<<"\n";
         if(mp.find(my)!=mp.end()&&my.size()>8){
             yes=true;

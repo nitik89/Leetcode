@@ -28,22 +28,19 @@ int main()
 
 
 bool findPair(int arr[], int size, int n){
-    unordered_map<int,int>mp;
-    for(int i=0;i<size;i++){
-        mp[arr[i]]++;
-    }
-    for(int i=0;i<size;i++){
-        if(mp.find(n+arr[i])!=mp.end()){
-            if(n+arr[i]==arr[i]){
-                if(mp[arr[i]+n]>1){
-                    return 1;
-                }
-            }
-            else{
-                return 1;
-            }
+    sort(arr,arr+size);
+    int i=0,j=1;
+    while(i<size&&j<size){
+        if(abs(arr[j]-arr[i])==n&&j!=i){
+            return true;
+        }
+        else if((arr[j]-arr[i])>n){
+            i++;
+        }
+        else{
+            j++;
         }
     }
-    return 0;
+    return false;
     
 }

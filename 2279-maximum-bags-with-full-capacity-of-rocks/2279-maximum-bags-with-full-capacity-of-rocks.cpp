@@ -2,20 +2,19 @@ class Solution {
 public:
     int maximumBags(vector<int>& cap, vector<int>& rocks, int addt) {
         int n=rocks.size();
-        vector<int>req(n);
         
         for(int i=0;i<n;i++){
-            req[i]=cap[i]-rocks[i];
+            cap[i]=cap[i]-rocks[i];
         }
-        sort(req.begin(),req.end());
+        sort(cap.begin(),cap.end());
         int cnt=0;
         for(int i=0;i<n;i++){
-            if(req[i]==0){
+            if(cap[i]==0){
                 cnt++;
             }
             else{
-                if(addt>=req[i]){
-                    addt-=req[i];
+                if(addt>=cap[i]){
+                    addt-=cap[i];
                     cnt++;
                 }
                 else{

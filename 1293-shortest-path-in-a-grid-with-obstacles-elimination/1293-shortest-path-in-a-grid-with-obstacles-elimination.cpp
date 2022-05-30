@@ -17,7 +17,7 @@ public:
             int count=vec[3];
               // cout<<i<<" "<<j<<"\n";
             if(i==n-1&&j==m-1){
-                cout<<count<<" ";
+                // cout<<count<<" ";
                 return steps;
             }
             q.pop();

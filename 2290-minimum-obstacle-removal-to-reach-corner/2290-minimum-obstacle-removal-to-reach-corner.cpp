@@ -1,37 +1,35 @@
 class Solution {
 public:
-    int minimumObstacles(vector<vector<int>>& grid) {
-        priority_queue<vector<int>,vector<vector<int>>, greater<vector<int>>>q;
-        int n=grid.size(),m=grid[0].size();
-        vector<vector<int>>vis(n,vector<int>(m,0));
-        vector<vector<int>>obs(n,vector<int>(m,INT_MAX));
-        q.push({0,0,0});
-        vector<vector<int>>dirs{{0,1},{-1,0},{0,-1},{1,0}};
-        obs[0][0]=0;
-        int ans=INT_MAX;
-        while(!q.empty()){
-            auto vec=q.top();
-            int count=vec[0];
-            int i=vec[1];
-            int j=vec[2];
-            
-            
-            q.pop();
-            
-            for(int k=0;k<dirs.size();k++){
-                int nx=i+dirs[k][0];
-                int ny=j+dirs[k][1];
-                if(nx>=n||ny>=m||nx<0||ny<0){
-                    continue;
-                }
-              
-                 if(count+grid[nx][ny]<obs[nx][ny]){
-                     obs[nx][ny]=count+grid[nx][ny];
-                    q.push({count+grid[nx][ny],nx,ny});
+    int minimumObstacles(vector<vector<int>>& mat) {
+         vector<pair<int,int>>d={{-1,0},{0,1},{1,0},{0,-1}};
+        int n=mat.size();
+        int m=mat[0].size();
+        queue<pair<int,int>>q;
+        q.push({0,0});
+        vector<vector<int>>dp(n,vector<int>(m,INT_MAX));
+        dp[0][0]=0;
+        while(q.size())
+        {
+            int size=q.size();
+            for(int i=0;i<size;i++)
+            {
+                auto temp=q.front();
+                q.pop();
+                int x=temp.first;
+                int y=temp.second;
+                for(auto it:d)
+                {
+                    int nx=x+it.first;
+                    int ny=y+it.second;
+                    if(nx>=0&&ny>=0&&nx<n&&ny<m&&dp[x][y]+mat[nx][ny]<dp[nx][ny])
+                    {
+                        dp[nx][ny]=dp[x][y]+mat[nx][ny];
+                         q.push({nx,ny});
+                    }
                 }
             }
-            
         }
-        return obs[n-1][m-1];
+        return dp[n-1][m-1];
+                
     }
 };

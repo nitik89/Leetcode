@@ -16,18 +16,10 @@ public:
                 cnt+=val/3;
             }
             
-            else if(val%3==2){
+            else {
                 cnt+=(val/3)+1;
             }
-            else if(val%3==1){
-                cnt+=(val/3)+1;
-            }
-            else if(val%2==0){
-                cnt+=val/2;
-            }
-            else if(val%2==1){
-                cnt+=(val/2);
-            }
+            
             
         }
         return cnt;

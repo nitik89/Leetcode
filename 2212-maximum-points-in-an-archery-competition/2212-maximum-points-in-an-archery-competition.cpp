@@ -1,39 +1,38 @@
 class Solution {
 public:
-    vector<int>finalans;
-    int mx=INT_MIN;
-    void getAns(int arr,vector<int>&alice,int idx,int sum,vector<int>an){
-        if(arr<0){
+    /*
+        1. Use arrows to earn more higher points
+        2. Save arrows to use them in earning more lower points than using them for lesser higher points
+        3. At a given section either do not use or use one more than aliceArrows[idx]
+    */
+    // 1 & 2 seem contradictory, hence check all combinations.
+    
+    vector<int> ans;
+    vector<int> refArrows;
+    int mxScore; 
+    void solve(int remArrows, int idx, vector<int> &path, int n, int score) {
+        if(remArrows < 0) {
             return;
         }
-        if(idx<0){
-            // cout<<arr<<" ";
-            if(mx<sum&&arr>=0){
-                
-                // cout<<sum<<" "<<arr<<"\n";
-                mx=sum;
-               
-                finalans=an;
-                finalans[0]+=arr;
-            }
+        if(idx == n && mxScore < score) {
+            mxScore = score;
+            path[n - 1] += remArrows;
+            ans = path; // add +remArrows to last element of path
             return;
         }
-        if(alice[idx]+1<=arr){
-            int curr=alice[idx]+1;
-            an.push_back(curr);
-            getAns(arr-(alice[idx]+1),alice,idx-1,sum+idx,an);
-            an.pop_back();
+        for(int i = idx; i < n; i++) {
+            path[i] = 0;
+            solve(remArrows, i+1, path, n, score);
+            path[i] = refArrows[i] + 1;
+            solve(remArrows - path[i], i+1, path, n, score + i);
         }
-        an.push_back(0);
-        getAns(arr,alice,idx-1,sum,an);
-        an.pop_back();
     }
-    vector<int> maximumBobPoints(int arr, vector<int>& alice) {
-        getAns(arr,alice,alice.size()-1,0,{});
-        // vector<int>an;
-        reverse(finalans.begin(),finalans.end());
-         // cout<<mx<<" ";
-        return finalans;
-        
+    
+    vector<int> maximumBobPoints(int numArrows, vector<int>& aliceArrows) {
+        mxScore = INT_MIN;
+        refArrows = aliceArrows;
+        vector<int> path(12, -1);
+        solve(numArrows, 0, path, 12, 0);
+        return ans;
     }
 };

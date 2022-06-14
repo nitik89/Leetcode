@@ -1,24 +1,31 @@
 class Solution {
 public:
-    vector<vector<int>> findWinners(vector<vector<int>>& mat) {
-        map<int,int>mp;
-        for(auto x:mat){
-            mp[x[1]]++;
+    vector<vector<int>> findWinners(vector<vector<int>>& matches) {
+        map<int, pair<int, int>>mp;
+        for(int i=0;i<matches.size();i++)
+        {
+            if(mp.find(matches[i][0])==mp.end())
+                mp.insert({matches[i][0], {1, 0}});
+            else
+                mp[matches[i][0]].first++;
+            if(mp.find(matches[i][1])==mp.end())
+                mp.insert({matches[i][1], {0, 1}});
+            else
+                mp[matches[i][1]].second++;
         }
-        vector<vector<int>>vec(2);
-        for(auto x:mat){
-            if(mp.count(x[0])==0){
-                vec[0].push_back(x[0]);
-                mp[x[0]]+=2;
-            }
+        vector<int>v1;
+        vector<int>v2;
+        for (auto const& x : mp)
+        {
+            if(x.second.second==1)
+                v1.push_back(x.first);
+            if(x.second.second==0)
+                v2.push_back(x.first);
         }
-    for(auto x:mp){
-        if(x.second==1){
-            vec[1].push_back(x.first);
-        }
-    }
-        sort(vec[0].begin(),vec[0].end());
-        return vec;
+        vector<vector<int>>v;
+        v.push_back(v2);
+        v.push_back(v1);
+        return v;
         
     }
 };

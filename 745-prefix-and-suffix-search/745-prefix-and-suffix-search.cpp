@@ -9,7 +9,7 @@ public:
                 for(int k=str.size()-1;k>=0;k--){
                     string t=str.substr(k,str.size()+1-k);
                     // cout<<t<<" ";
-                    mp[temp+" "+t]=i;
+                    mp[temp+" "+t]=i+1;
                     
                 }
                 // cout<<"\n";
@@ -18,10 +18,10 @@ public:
     }
     
     int f(string prefix, string suffix) {
-        if(mp.find(prefix+" "+suffix)==mp.end()){
-            return -1;
-        }
-        return mp[prefix+" "+suffix];
+        // if(mp.find(prefix+" "+suffix)==mp.end()){
+        //     return -1;
+        // }
+        return mp[prefix+" "+suffix]-1;
         // return 0;
     }
 };

@@ -15,11 +15,12 @@ public:
         }
         int mx=1e9;
         
-        mx=min(mx,getAns(num,k+10,sum,val,dp));
+        
         
         for(int i=1;i*k<=num;i++){
             mx=min(mx,getAns(num-i*k,k,sum,val,dp)+i);
         }
+        mx=min(mx,getAns(num,k+10,sum,val,dp));
         
         
         return dp[num][k]=mx;

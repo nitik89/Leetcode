@@ -17,8 +17,8 @@ public:
         
         mx=min(mx,getAns(num,k+10,sum,val,dp));
         
-        if(num>=k){
-            mx=min(mx,1+getAns(num-k,k,sum,val,dp));
+        for(int i=1;i*k<=num;i++){
+            mx=min(mx,getAns(num-i*k,k,sum,val,dp)+i);
         }
         
         

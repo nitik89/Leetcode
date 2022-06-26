@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int countHousePlacements(int n) {
+       if(n==1){
+           return 4;
+       }
+        if(n==2){
+           return 9;
+       }
+        long long mod=1000000007;
+        long long a=2,b=3,c;
+        	for(int i = 3; i <= n; i++){
+                c = (a%mod + b%mod)%mod;
+                a = b%mod;
+                b = c;
+            }
+       // cout<<b<<"\n";
+        return ((b%mod)*(b%mod))%mod;
+        
+    }
+};

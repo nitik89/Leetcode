@@ -11,33 +11,23 @@
  */
 class Solution {
 public:
-    TreeNode* getRightNode(TreeNode* curr,TreeNode* temp){
-        TreeNode* t=curr;
-        while(t->right!=NULL&&t->right!=temp){
-            t=t->right;
-        }
-        return t;
-    }
     vector<int> inorderTraversal(TreeNode* root) {
+        stack<TreeNode*>stk;
         vector<int>ans;
-        TreeNode* curr=root;
-        while(curr!=NULL){
-            TreeNode* temp=curr->left;
-            if(temp==NULL){
-                ans.push_back(curr->val);
-                curr=curr->right;
+        TreeNode* node=root;
+        while(true){
+            while(node!=NULL){
+                stk.push(node);
+                node=node->left;
             }
-            else{
-                TreeNode*rn=getRightNode(temp,curr);
-                if(rn->right==NULL){
-                   rn->right=curr;
-                    curr=curr->left;
-                }
-                else{
-                    rn->right=NULL;
-                    ans.push_back(curr->val);
-                    curr=curr->right;
-                }
+            if(stk.empty()){
+                break;
+            }
+            if(!stk.empty()){
+            node=stk.top();
+            stk.pop();
+            ans.push_back(node->val);
+            node=node->right;
             }
             
         }

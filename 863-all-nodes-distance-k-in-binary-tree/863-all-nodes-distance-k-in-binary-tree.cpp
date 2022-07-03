@@ -25,7 +25,7 @@ public:
             }
         }
     }
-    void findNodes(TreeNode* root,unordered_map<TreeNode*,TreeNode*>mp,vector<int>&collect,int dis,int k,unordered_map<TreeNode*,int>&vis){
+    void findNodes(TreeNode* root,unordered_map<TreeNode*,TreeNode*>&mp,vector<int>&collect,int dis,int k,unordered_map<TreeNode*,int>&vis){
         if(root==NULL){
             return;
         }

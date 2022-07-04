@@ -12,19 +12,19 @@
 class Solution {
 public:
     int idx;
-    TreeNode* helper(vector<int>&preorder,int lr,int rr){
-        if(idx>=preorder.size()||lr>preorder[idx]||rr<preorder[idx]){
+    TreeNode* helper(vector<int>&preorder,int rr){
+        if(idx>=preorder.size()||rr<preorder[idx]){
             return NULL;
         }
         TreeNode*root=new TreeNode(preorder[idx]);
         idx++;
-        root->left=helper(preorder,lr,root->val);
-        root->right=helper(preorder,root->val,rr);
+        root->left=helper(preorder,root->val);
+        root->right=helper(preorder,rr);
         return root;
         
     }
     TreeNode* bstFromPreorder(vector<int>& preorder) {
         idx=0;
-        return helper(preorder,INT_MIN,INT_MAX);
+        return helper(preorder,INT_MAX);
     }
 };

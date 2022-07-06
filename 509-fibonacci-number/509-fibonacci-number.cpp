@@ -1,9 +1,17 @@
 class Solution {
 public:
-    int fib(int n) {
-        if(n==0||n==1){
+    vector<int>dp;
+    int dfs(int n){
+         if(n==0||n==1){
             return n;
         }
-        return fib(n-1)+fib(n-2);
+        if(dp[n]!=-1){
+            return dp[n];
+        }
+        return dp[n]=dfs(n-1)+dfs(n-2);
+    }
+    int fib(int n) {
+       dp.resize(n+1,-1);
+       return dfs(n);
     }
 };

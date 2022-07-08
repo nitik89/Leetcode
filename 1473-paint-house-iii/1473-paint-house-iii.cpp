@@ -20,19 +20,15 @@ public:
             return dp[curr][prev][i];
         }
         
-        if(prev!=0){
+       
             if(houses[i]!=0&&prev==houses[i]){
                return dp[curr][prev][i]=getAns(houses,cost,m,n,target,curr,prev,i+1);
             }
             else if(houses[i]!=0){
                 return dp[curr][prev][i]=getAns(houses,cost,m,n,target,curr+1,houses[i],i+1);
             }
-        }
-        if(prev==0){
-            if(houses[i]!=0){
-                return dp[curr][prev][i]=getAns(houses,cost,m,n,target,curr+1,houses[i],i+1);
-            }
-        }
+        
+        
         if(houses[i]==0){
         int cst=1e9;
             // cout<<cost[i].size()<<" ";

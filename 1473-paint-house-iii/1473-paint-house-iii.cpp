@@ -21,10 +21,11 @@ public:
         }
         
        
-            if(houses[i]!=0&&prev==houses[i]){
+        if(houses[i]!=0&&prev==houses[i]){
                return dp[curr][prev][i]=getAns(houses,cost,m,n,target,curr,prev,i+1);
-            }
-            else if(houses[i]!=0){
+        }
+        
+        else if(houses[i]!=0){
                 return dp[curr][prev][i]=getAns(houses,cost,m,n,target,curr+1,houses[i],i+1);
             }
         
@@ -33,15 +34,11 @@ public:
         int cst=1e9;
             // cout<<cost[i].size()<<" ";
         for(int k=0;k<cost[i].size();k++){
-            if(prev!=k+1){
+            
                 
-                cst=min(cst,cost[i][k]+getAns(houses,cost,m,n,target,curr+1,k+1,i+1));
-            }
-            else{
-                cst=min(cst,cost[i][k]+getAns(houses,cost,m,n,target,curr,prev,i+1));
+                cst=min(cst,cost[i][k]+getAns(houses,cost,m,n,target,prev==k+1?curr:curr+1,k+1,i+1));
             
             
-        }
         }
             return dp[curr][prev][i]=cst;
         }

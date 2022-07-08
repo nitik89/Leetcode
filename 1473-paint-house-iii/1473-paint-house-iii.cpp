@@ -1,6 +1,6 @@
 class Solution {
 public:
-    int dp[101][101][101];
+    int dp[101][21][101];
     int getAns(vector<int>&houses,vector<vector<int>>& cost,int m,int n,int target,int curr,int prev,int i){
         // cout<<"h"<<" ";
     if(i>=houses.size()){

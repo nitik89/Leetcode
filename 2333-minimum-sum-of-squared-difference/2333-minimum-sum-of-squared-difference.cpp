@@ -1,12 +1,6 @@
 class Solution {
 public:
-    struct cmp {
-    bool operator()(int const& p1, int const& p2)
-    {
-       
-        return abs(p1) < abs(p2);
-    }
-};
+    
     long long minSumSquareDiff(vector<int>& nums1, vector<int>& nums2, int k1, int k2) {
         int n=nums1.size();
      int total=k1+k2;
@@ -42,35 +36,7 @@ public:
         }
         return ans;
         
-//        priority_queue<int, vector<int>, cmp> pq;
-//         for(auto x:nums1){
-//             pq.push(x);
-//         }
-//         // int sum=0;
-//         while(!pq.empty()&&total!=0){
-//             int x=pq.top();
-//             pq.pop();
-//             if(x<0){
-//                x++; 
-//                 pq.push(x);
-//                  total--;
-//             }
-            
-//             else if(x>0){
-//                 x--;
-//                 pq.push(x);
-//                  total--;
-//             }
-           
-//         }
-//         long long sum=0;
-//         while(!pq.empty()){
-//             long long x=pq.top();
-//             // cout<<x<<" ";
-//             sum+=(long long)x*x;
-//             pq.pop();
-//         }
-        // return sum;
+
         
     }
 };

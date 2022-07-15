@@ -11,7 +11,7 @@ public:
         for(int i=0;i<buses.size();i++){
             int val=buses[i];
             int my=0;
-            if(mp.count(ps[j]-1)==0){
+            if(j<ps.size()&&mp.count(ps[j]-1)==0){
                 my=ps[j]-1;
             }
             int cnt=0;
@@ -23,6 +23,7 @@ public:
                 j++;
             }
             // cout<<cnt<<" "<<j<<"\n";
+            // cout<<j<<" ";
             if(j<ps.size()&&mp.count(ps[j]-1)==0&&(ps[j]-1<=val)&&cnt<capacity){
                 my=ps[j]-1;
             }

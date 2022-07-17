@@ -1,24 +1,15 @@
 class Solution {
 public:
-    int dp[15001][4][4][4];
-    int mod=1e9+7;
-    int getAns(int n,int prev,int prev1,int prev2){
-        if(n==0){
-            return 1;
-        }
-        if(dp[n][prev][prev1][prev2]!=-1){
-            return dp[n][prev][prev1][prev2];
-        }
-        int cnt=0;
-        for(int i=1;i<=3;i++){
-            if((i!=prev||n%3==0)&&i!=prev2){
-                cnt=cnt%mod+getAns(n-1,i,prev,prev1)%mod;
-            }
-        }
-        return dp[n][prev][prev1][prev2]=cnt%mod;
-    }
     int numOfWays(int n) {
-        memset(dp,-1,sizeof dp);
-      return  getAns(n*3,0,0,0);
+       long long a=6,b=6;
+        long long mod=1e9+7;
+        for(int i=2;i<=n;i++){
+            long long x=((a*3)+(b*2))%mod;
+            long long y=((a*2)+(b*2))%mod;
+            a=x%mod;
+            b=y%mod;
+        }
+        int sum=(a%mod+b%mod)%mod;
+        return sum;
     }
 };

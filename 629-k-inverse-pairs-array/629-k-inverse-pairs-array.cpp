@@ -27,7 +27,7 @@ public:
                 }
                 else{
                     int ans=0;
-                    for(int f=0;f<=min(j,i-1);f++){
+                    for(int f=0;f<min(j+1,i);f++){
             ans=ans%mod+dp[i-1][j-f]%mod;
                     }
                     dp[i][j]=dp[i][j]%mod+ans%mod;

@@ -16,7 +16,7 @@ public:
         }
     }
     void dfs2(int node,vector<int>&vis,vector<vector<int>>&grp,int dis){
-        if(vis[node]||node==-1){
+        if(vis[node]){
            return; 
         }
         vis[node]=1;

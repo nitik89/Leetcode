@@ -2,8 +2,8 @@ class FindSumPairs {
 public:
     unordered_map<int,int>mp;
     // vector<int>vec1;
+   vector<int>vec;
     unordered_map<int,int>idx;
-    unordered_map<int,int>mp1;
     FindSumPairs(vector<int>& nums1, vector<int>& nums2) {
         // vec1=nums1;
         // vec2=num2;
@@ -13,9 +13,7 @@ public:
             mp[x]++;
             
         }
-        for(auto x:nums1){
-            mp1[x]++;
-        }
+        vec=nums1;
     }
     
     
@@ -29,8 +27,8 @@ public:
     
     int count(int tot) {
         int cnt=0;
-        for(auto x:mp1){
-            cnt+=x.second*mp[tot-x.first];
+        for(auto x:vec){
+            cnt+=mp[tot-x];
         }
         return cnt;
     }

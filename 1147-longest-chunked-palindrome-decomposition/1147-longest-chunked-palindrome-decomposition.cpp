@@ -1,7 +1,7 @@
 class Solution {
 public:
     int dp[1001][1001];
-    int getAns(string str,int s,int e){
+    int getAns(string &str,int s,int e){
          // cout<<s<<" "<<e<<"\n";
         int n=e-s+1;
         if(s>e){

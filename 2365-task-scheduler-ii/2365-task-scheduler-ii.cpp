@@ -2,25 +2,29 @@ class Solution {
 public:
     long long taskSchedulerII(vector<int>& tasks, int space) {
         unordered_map<long long,long long>mp;
-        long long ans=0;
-        vector<long long>dp(tasks.size());
-        long long currspace;
+        long long track=0;
         for(int i=0;i<tasks.size();i++){
+           
             if(mp.find(tasks[i])==mp.end()){
-                mp[tasks[i]]=i;
-                ans++;
-                dp[i]=ans;
+                
+                mp[tasks[i]]=track;
+                track++;
             }
             else{
-                ans++;
-                long long time=ans-dp[mp[tasks[i]]]-1;
-                long long diff=max(0LL,space-time);
-                ans+=diff;
-                mp[tasks[i]]=i;
+                // cout<<i<<" "<<track<<"\n";
+                //check for insertions
+               
+                long long vals=track-mp[tasks[i]]-1;
+               long long t=max(0LL,space-vals);
+                // cout<<t<<" "<<tasks[i]<<"\n";
+                track+=t;
+               
+                mp[tasks[i]]=track;
+                track++;
                 
-                dp[i]=ans;
+                
             }
         }
-        return dp[tasks.size()-1];
+        return track;
     }
 };

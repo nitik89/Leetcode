@@ -1,19 +1,30 @@
 class Solution {
 public:
     bool reorderedPowerOf2(int n) {
-        string  s = to_string(n);
-        sort(s.begin() , s.end());
-        do{
-            int x = stoi(s);
-            int ct = 0;
-            while(x!=0){
-                x = x&(x-1);
-                ct++;
+        map<int,int>mp1;
+        
+        while(n)
+        {
+            mp1[n%10]++;
+            n=n/10;
+        }
+        for(int i=0;i<32;i++)
+        {
+            map<int,int>mp2;
+            
+            long long p=pow(2,i);
+            while(p)
+            {
+                mp2[p%10]++;
+                p=p/10;
+                
+                
             }
-            if(ct==1 and s[0]!='0'){
+            if(mp1==mp2)
+            {
                 return true;
             }
-        }while(next_permutation(s.begin() , s.end()));
+        }
         return false;
     }
 };

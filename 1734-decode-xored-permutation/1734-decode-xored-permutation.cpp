@@ -2,17 +2,15 @@ class Solution {
 public:
     vector<int> decode(vector<int>& encoded) {
         int n=encoded.size();
-        vector<int>vec(n);
+       
         int xr=encoded[0];
-        vec[0]=xr;
+        
+        int allxre=xr;
         for(int i=1;i<encoded.size();i++){
             xr^=encoded[i];
-            vec[i]=xr;
+            allxre^=xr;
         }
-        int allxre=vec[0];
-        for(int i=1;i<vec.size();i++){
-            allxre^=vec[i];
-        }
+        
         int allxr=1;
         for(int i=2;i<=encoded.size()+1;i++){
             allxr^=i;

@@ -1,50 +1,42 @@
 class Solution {
 public:
-int fact(int n)
-{
-    if (n <= 1)
-        return 1;
-    return n*fact(n-1);
-}
- 
-int perm(int n, int r)
-{
-    return fact(n)/fact(n-r);
-}
-    int countSpecialNumbers(int n) {
-        
-        string str=to_string(n);
+    int dp[11][2][1<<10+1];
+    int dfs(int i,int tight,string &str,int mask){
+        if(i>=str.size()){
+            // cout<<(mask!=0)<<" ";
+            return mask!=0;
+        }
+        if(dp[i][tight][mask]!=-1){
+            return dp[i][tight][mask];
+        }
         int cnt=0;
-        for(int i=1;i<str.size();i++){
-            cnt+=9*perm(9,str.size()-i-1);
-        }
-        unordered_set<int>st;
-        for(int i=0;i<str.size();i++){
-            bool hasprev=false;
-            for(int j=i>=1?0:1;j<=9;j++){
-                if(st.count(j)) continue;
-                if(j<(str[i] - '0')){
-                    cnt+=perm(9-i,str.size()-i-1);
-                }
-                else if(j==(str[i] - '0')){
-                     hasprev=true;
-                    st.insert(j);
+        if(tight==1){
+            for(int j=0;j<=(str[i] - '0');j++){
+                // cout<<j<<" ";
+                if((mask&(1<<j)))continue;
+                
+                 int newmask = (mask == 0 && j == 0 ? mask : (mask | (1 << j)));
+               if(j==(str[i] - '0')){
+                  cnt+=dfs(i+1,1,str,newmask);
+               } 
+                else{
+                    cnt+=dfs(i+1,0,str,newmask);
                 }
             }
-            if(!hasprev){
-                return cnt;
-            }
         }
-          cnt++;
-        
-        vector<int>vec(10,0);
-        for(int i=0;i<str.size();i++){
-            vec[str[i] - '0']++;
-            if(vec[str[i] - '0']>1){
-                cnt--;
-                break;
-            }
+        else{
+           for(int j=0;j<=9;j++){
+               
+               if((mask&(1<<j)))continue;
+                int newmask = (mask == 0 && j == 0 ? mask : (mask | (1 << j)));
+               cnt+=dfs(i+1,0,str,newmask);
+           }
         }
-        return cnt;
+        return dp[i][tight][mask]=cnt;
+    }
+    int countSpecialNumbers(int n) {
+        string str=to_string(n);
+        memset(dp,-1,sizeof dp);
+       return dfs(0,1,str,0);
     }
 };

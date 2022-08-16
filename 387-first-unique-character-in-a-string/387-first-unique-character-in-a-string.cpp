@@ -1,14 +1,15 @@
 class Solution {
 public:
     int firstUniqChar(string s) {
-        vector<int>vec(26,0);
-        for(auto x:s){
-            vec[x - 'a']++;
+          ios_base::sync_with_stdio(0);
+        int vec[256]={};
+        for(auto &x:s){
+            vec[x]++;
         }
         int idx=0;
-        for(auto x:s){
+        for(auto &x:s){
            
-            if(vec[x - 'a'] == 1){
+            if(vec[x] == 1){
                 return idx;
             }
             idx++;

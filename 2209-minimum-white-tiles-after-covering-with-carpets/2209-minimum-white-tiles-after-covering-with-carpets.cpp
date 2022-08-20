@@ -9,10 +9,10 @@ public:
             return dp[i][num];
         }
         int mx=INT_MIN;
-        if(floor[i]=='1'){
+        
            int calc=((i+len-1>=floor.size())?pre[floor.size()-1]:pre[i+len-1])-(i-1>=0?pre[i-1]:0);
             mx=max(mx,calc+getAns(i+len,floor,pre,num-1,len));
-        }
+        
         mx=max(mx,getAns(i+1,floor,pre,num,len));
         return dp[i][num]=mx;
     }

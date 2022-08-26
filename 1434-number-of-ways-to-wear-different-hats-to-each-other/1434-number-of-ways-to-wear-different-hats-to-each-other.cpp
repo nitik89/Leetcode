@@ -4,10 +4,11 @@ public:
     int mod=1e9+7;
     int getAns(vector<vector<int>>&hats,int mask,int no){
         // cout<<mask<<" ";
-        if(no>40){
-            if(mask==((1<<hats.size())-1)){
+         if(mask==((1<<hats.size())-1)){
                             return 1;
             }
+        if(no>40){
+           
             return 0;
 
         }
@@ -15,7 +16,7 @@ public:
             return dp[no][mask];
         }
         int cnt=0;
-   cnt=cnt+getAns(hats,mask,no+1);
+   cnt=cnt%mod+getAns(hats,mask,no+1);
         for(int i=0;i<hats.size();i++){
             for(int j=0;j<hats[i].size();j++){
                 if(no==hats[i][j]){

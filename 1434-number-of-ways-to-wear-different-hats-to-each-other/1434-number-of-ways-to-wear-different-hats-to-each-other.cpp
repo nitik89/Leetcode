@@ -1,11 +1,13 @@
 class Solution {
 public:
-    int dp[41][1<<10+1];
+    int dp[41][(1<<10)+1];
     int mod=1e9+7;
-    int getAns(vector<vector<int>>&hats,int mask,int no){
+    
+    // vector<vector<int>>vec(41,vector<int>());
+    int getAns(vector<vector<int>>&vec,int mask,int no,int n){
         // cout<<mask<<" ";
-         if(mask==((1<<hats.size())-1)){
-                            return 1;
+         if(mask==((1<<n)-1)){
+            return 1;
             }
         if(no>40){
            
@@ -16,20 +18,23 @@ public:
             return dp[no][mask];
         }
         int cnt=0;
-   cnt=cnt%mod+getAns(hats,mask,no+1);
-        for(int i=0;i<hats.size();i++){
-            for(int j=0;j<hats[i].size();j++){
-                if(no==hats[i][j]){
-                if(mask&(1<<i)) continue;
-                cnt=cnt%mod+getAns(hats,mask|(1<<i),no+1);
-                }
-                
-            }
+   cnt=cnt%mod+getAns(vec,mask,no+1,n);
+        for(auto x:vec[no]){
+            if(mask&(1<<x)) continue;
+           
+                cnt=cnt%mod+getAns(vec,mask|(1<<x),no+1,n);
+            
         }
         return dp[no][mask]=cnt%mod;
     }
     int numberWays(vector<vector<int>>& hats) {
         memset(dp,-1,sizeof dp);
-       return getAns(hats,0,1);
+        vector<vector<int>>vec(41, vector<int>());
+        for(int i=0;i<hats.size();i++){
+            for(int j=0;j<hats[i].size();j++){
+                vec[hats[i][j]].push_back(i);
+            }
+        }
+       return getAns(vec,0,1,hats.size());
     }
 };

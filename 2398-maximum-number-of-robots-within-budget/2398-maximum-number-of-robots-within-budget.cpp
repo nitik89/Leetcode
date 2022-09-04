@@ -1,7 +1,7 @@
 class Solution {
 public:
     int maximumRobots(vector<int>& ct, vector<int>& rc, long long budget) {
-         set<long long, greater<long long> > st;
+         set<long long,greater<long long> > st;
         int s=0,e=0;
         long long sum=0;
         int ans=0;

@@ -1,53 +1,30 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
 class Solution {
 public:
     vector<vector<int>> verticalTraversal(TreeNode* root) {
-        if(root==NULL){
-            vector<vector<int>>ans;
-            return ans;
-        }
-        map<int,map<int,multiset<int>>>mp;
-        queue<pair<TreeNode*,pair<int,int>>>q;
+        map<int,map<int,multiset<int>>> mp;
+        queue<pair<TreeNode*,pair<int,int>>> q;
         q.push({root,{0,0}});
         while(!q.empty()){
-            TreeNode* node=q.front().first;
-            int level=q.front().second.second;
-            int lv=q.front().second.first;
-            mp[level][lv].insert(node->val);
+            auto p = q.front();
             q.pop();
-            if(node->right!=NULL){
-                q.push({node->right,{lv+1,level+1}});
+            TreeNode* node = p.first;
+            int x = p.second.first, y = p.second.second;
+            mp[x][y].insert(node->val);
+            if(node->left){
+                q.push({node->left,{x-1,y+1}});
             }
-            if(node->left!=NULL){
-                q.push({node->left,{lv+1,level-1}});
+            if(node->right){
+                q.push({node->right,{x+1,y+1}});
             }
-            
         }
-        vector<vector<int>>ans;
-        for(auto x:mp){
-            vector<int>an;
-            for(auto y:x.second){
-                
-                for(auto m:y.second){
-                    an.push_back(m);
-                }
+        vector<vector<int>> ans;
+        for(auto q:mp){
+            vector<int> col;
+            for(auto p:q.second){
+                col.insert(col.end(),p.second.begin(),p.second.end());
             }
-            ans.push_back(an);
-            
+            ans.push_back(col);
         }
-        
-        
         return ans;
-        
     }
 };

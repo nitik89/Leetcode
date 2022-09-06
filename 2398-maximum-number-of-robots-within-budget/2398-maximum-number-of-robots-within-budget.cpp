@@ -11,9 +11,7 @@ public:
             pq.push({ct[e],e});
             while(s<e&&((pq.top().first+(long long)(e-s+1)*sum)>budget)){
                 sum-=rc[s];
-                while(!pq.empty()&&pq.top().second<s){
-                    pq.pop();
-                }
+                
                 s++;
                 
             }

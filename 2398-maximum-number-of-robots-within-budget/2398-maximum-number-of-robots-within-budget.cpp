@@ -1,21 +1,26 @@
 class Solution {
 public:
     int maximumRobots(vector<int>& ct, vector<int>& rc, long long budget) {
-         set<long long,greater<long long> > st;
+        priority_queue<pair<int,int>>pq;
         int s=0,e=0;
         long long sum=0;
         int ans=0;
         int n=ct.size();
         while(e<n){
             sum+=rc[e];
-            st.insert(ct[e]);
-            while(s<e&&((*st.begin()+(long long)(e-s+1)*sum)>budget)){
+            pq.push({ct[e],e});
+            while(s<e&&((pq.top().first+(long long)(e-s+1)*sum)>budget)){
                 sum-=rc[s];
-                st.erase(ct[s]);
+                while(!pq.empty()&&pq.top().second<s){
+                    pq.pop();
+                }
                 s++;
                 
             }
-            long long t=(*st.begin()+(e-s+1)*sum);
+            while(!pq.empty()&&pq.top().second<s){
+                    pq.pop();
+                }
+            long long t=(pq.top().first+(e-s+1)*sum);
             if(t<=budget){
                 ans=max(e-s+1,ans);
             }

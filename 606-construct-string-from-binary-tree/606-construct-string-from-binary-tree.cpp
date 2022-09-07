@@ -18,7 +18,7 @@ public:
         string lf=getAns(root->left);
         string rgt=getAns(root->right);
         string ans=to_string(root->val);
-        if((rgt!=""&&lf=="")||(lf!=""&&rgt=="")||(lf!=""&&rgt!="")){
+        if((rgt!=""&&lf=="")||(lf!="")){
             ans.push_back('(');
             ans+=(lf);
             ans.push_back(')');

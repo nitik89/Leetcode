@@ -4,27 +4,24 @@ public:
        
         vector<pair<int,int>>vec;
         for(int i=0;i<speed.size();i++){
-            vec.push_back({speed[i],eff[i]});
+            vec.push_back({eff[i],speed[i]});
         }
         sort(vec.rbegin(),vec.rend());
-        priority_queue<pair<int,int>,vector<pair<int,int>>,greater<pair<int,int>>>pq;
+        priority_queue<int,vector<int>,greater<int>>pq;
         long long sum=0;
         long long ans=LONG_MIN;
-        for(int i=0;i<vec.size();i++){
-            sum+=vec[i].first;
-                pq.push({vec[i].second,vec[i].first});
-            if(pq.size()>k){
-                sum-=pq.top().second;
-                pq.pop();
+        
+        for(int i=0;i<n;i++){
+            
+           
+            if(pq.size()==k){
+                sum-=pq.top();
+               pq.pop(); 
             }
-            if(pq.size()<=k){
-                ans=max(sum*pq.top().first,ans);
-            }
-        }
-        while(!pq.empty()){
-            sum-=pq.top().second;
-                pq.pop();
-            ans=max(sum*pq.top().first,ans);
+            pq.push(vec[i].second);
+            sum+=vec[i].second;
+            ans=max(ans,sum*vec[i].first);
+            
         }
         int mod=1e9+7;
         return ans%mod;

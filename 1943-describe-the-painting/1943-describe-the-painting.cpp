@@ -3,12 +3,12 @@ public:
     vector<vector<long long>> splitPainting(vector<vector<int>>& seg) {
         vector<long long>vec(1e5+1,0);
         vector<bool>start(1e5+1,false);
-        vector<bool>end(1e5+1,false);
+        // vector<bool>end(1e5+1,false);
         for(auto &x:seg){
             vec[x[0]]+=x[2];
             vec[x[1]]-=x[2];
             start[x[0]]=true;
-            end[x[1]]=true;
+            start[x[1]]=true;
             
             
         }
@@ -24,7 +24,7 @@ public:
             
             
                 
-                if(end[i]||start[i]){
+                if(start[i]){
                     if(s!=0&&vec[i-1]!=0){
                     ans.push_back({s,i,vec[i-1]});
                     }

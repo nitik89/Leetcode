@@ -3,14 +3,14 @@ public:
     vector<int> sumEvenAfterQueries(vector<int>& nums, vector<vector<int>>& q) {
        
         int sum=0,idx=0;
-        for(auto x:nums){
+        for(auto &x:nums){
             
             if(x%2==0){
                 sum+=x;
             }
         }
         vector<int>ans;
-        for(auto x:q){
+        for(auto &x:q){
             int v=x[0],idx=x[1];
             if((nums[idx]+v)%2==0){
                 if(nums[idx]%2!=0){

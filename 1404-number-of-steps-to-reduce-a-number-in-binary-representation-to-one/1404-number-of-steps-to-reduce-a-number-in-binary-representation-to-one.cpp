@@ -23,7 +23,7 @@ public:
                 ans++;
             }
             else{
-                s=s.substr(0,s.size()-1);
+                s.pop_back();
                 ans++;
             }
         }

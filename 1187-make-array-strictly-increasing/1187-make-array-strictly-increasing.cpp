@@ -1,12 +1,12 @@
 class Solution {
 public:
-    int dp[2002][2002][2];
+    int dp[2002][2002];
     int getAns(vector<int>&vec1,vector<int>&vec2,int i,int j,bool swap){
         if(i==vec1.size()){
             return 0;
         }
-        if(dp[i][j][swap]!=-1){
-            return dp[i][j][swap];
+        if(dp[i][j]!=-1){
+            return dp[i][j];
         }
         int prev=swap?vec2[j-1]:vec1[i-1];
         int idx=upper_bound(vec2.begin()+j,vec2.end(),prev)-vec2.begin();//prev ka idx
@@ -17,7 +17,7 @@ public:
         if(idx<vec2.size()){
         ans=min(ans,1+getAns(vec1,vec2,i+1,idx+1,true));
         }
-        return dp[i][j][swap]=ans;
+        return dp[i][j]=ans;
         
     }
     int makeArrayIncreasing(vector<int>& arr1, vector<int>& arr2) {

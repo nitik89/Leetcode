@@ -24,6 +24,7 @@ public:
           fast=fast->next;
           n--;
       }
+        // cout<<fast->val<<" "
         if(fast==NULL){
             return head->next;
         }

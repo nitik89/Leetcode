@@ -9,12 +9,12 @@ public:
             string ulta="";
             for(int j=0;j<mat[0].size();j++){
                 if(mat[i][j]){
-                    temp+='1';
-                    ulta+='0';
+                    temp.push_back('1');
+                    ulta.push_back('0');
                 }
                 else{
-                    temp+='0';
-                    ulta+='1';
+                    temp.push_back('0');
+                    ulta.push_back('1');
                 }
             }
             mp[temp]++;

@@ -14,7 +14,7 @@ public:
             return dp[i][curr];
         }
         
-        string str1 = getAns(cost,target,0,curr+cost[i]);
+        string str1 = getAns(cost,target,0,curr+cost[i]); //unbounded knapsack we can use all the items again and again so we did like this
         string str2 = getAns(cost,target,i+1,curr);
         
         string temp = to_string(i+1) + str1;
@@ -24,7 +24,7 @@ public:
         
         else if(str2 == "0") return dp[i][curr] = temp;
     
-        
+        //lexogrpihical comp of the strings
         else if(temp.size() > str2.size() ){
             return dp[i][curr] = temp;
         }

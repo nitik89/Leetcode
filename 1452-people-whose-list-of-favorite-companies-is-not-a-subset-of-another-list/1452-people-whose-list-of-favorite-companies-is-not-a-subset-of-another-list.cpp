@@ -3,7 +3,7 @@ public:
     vector<int> peopleIndexes(vector<vector<string>>& fav) {
         int c=0;
         unordered_map<string,int>mp;
-        unordered_map<int,int>mp1;
+        // unordered_map<int,int>mp1;
        
         int j=0;
         for(auto x:fav){

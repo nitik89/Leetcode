@@ -3,15 +3,15 @@ public:
     int countTriplets(vector<int>& nums) {
        int mp[1<<16]={0};
         int n=nums.size();
-        for(int i=0;i<n;i++){
-            for(int j=0;j<n;j++){
-                mp[nums[i]&nums[j]]++;
+        for(auto x:nums){
+            for(auto y:nums){
+                mp[x&y]++;
             }
         }
         int cnt=0;
-        for(int i=0;i<n;i++){
+        for(auto x:nums){
             for(int j=0;j<(1<<16);j++){
-                if((nums[i]&(j))==0){
+                if((x&(j))==0){
                   cnt+=mp[j];  
                 }
             }

@@ -1,12 +1,21 @@
 class Solution {
 public:
-   int countTriplets(vector<int>& A, int cnt = 0) {
-  int tuples[1 << 16] = {};
-  for (auto a : A)
-    for (auto b : A) ++tuples[a & b];
-  for (auto a : A)
-    for (auto i = 0; i < (1 << 16); ++i)
-      if ((i & a) == 0) cnt += tuples[i];
-  return cnt;
-}
+    int countTriplets(vector<int>& nums) {
+       int mp[1<<16]={0};
+        int n=nums.size();
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                mp[nums[i]&nums[j]]++;
+            }
+        }
+        int cnt=0;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<(1<<16);j++){
+                if((nums[i]&(j))==0){
+                  cnt+=mp[j];  
+                }
+            }
+        }
+        return cnt;
+    }
 };

@@ -7,6 +7,7 @@ public:
             return c%k==0;
         }
         int ans=0;
+        // cout<<c<<" ";
         if(vec[i][j][c%k]!=-1){
             return vec[i][j][c%k];
         }
@@ -19,7 +20,7 @@ public:
         return vec[i][j][c%k]=ans%mod;
     }
     int numberOfPaths(vector<vector<int>>& grid, int k) {
-        vec.resize(grid.size(),vector<vector<int>>(grid[0].size(),vector<int>(50,-1)));
+        vec.resize(grid.size(),vector<vector<int>>(grid[0].size(),vector<int>(500,-1)));
        return getAns(grid,k,0,0,grid[0][0]);
     }
 };

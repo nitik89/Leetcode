@@ -20,7 +20,7 @@ public:
         return vec[i][j][c%k]=ans%mod;
     }
     int numberOfPaths(vector<vector<int>>& grid, int k) {
-        vec.resize(grid.size(),vector<vector<int>>(grid[0].size(),vector<int>(500,-1)));
+        vec.resize(grid.size(),vector<vector<int>>(grid[0].size(),vector<int>(700,-1)));
        return getAns(grid,k,0,0,grid[0][0]);
     }
 };

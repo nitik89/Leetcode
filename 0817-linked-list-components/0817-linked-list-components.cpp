@@ -13,44 +13,23 @@ class Solution
     public:
         int numComponents(ListNode *head, vector<int> &nums)
         {
-            unordered_map<int, ListNode*> mp;
-            ListNode *temp = head;
+            set<int> st;
             for (auto x: nums)
             {
-                mp[x] = NULL;
+                st.insert(x);
             }
+            ListNode *temp = head;
+            int ans = 0;
             while (temp != NULL)
             {
-
-                if (mp.count(temp->val))
-                {
-
-                    mp[temp->val] = temp;
-                }
-                temp = temp->next;
-            }
-            for (auto x: nums)
-            {
-                
-                ListNode *t = mp[x];
-
-                while (t != NULL && t->next != NULL && mp.find(t->next->val) != mp.end())
-                {
-                   
-
-                    t = t->next;
-                    mp[t->val] = NULL;
-                }
-            }
-            int ans = 0;
-            for (auto x: mp)
-            {
-                if (x.second != NULL)
+                if ((temp->next==NULL&&st.find(temp->val) != st.end())||(temp->next != NULL && st.find(temp->val) != st.end()
+                    &&st.find(temp->next->val) == st.end()))
                 {
                     ans++;
                 }
+                temp = temp->next;
             }
 
-            return ans;
+            return ans ;
         }
 };

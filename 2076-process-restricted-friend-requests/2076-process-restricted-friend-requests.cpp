@@ -56,7 +56,7 @@ class Solution
             {
                 int p = find(m[0]);
                 int q = find(m[1]);
-                if ((p == x && y == q) || (p == y && x == q))
+                if ((p == x && y == q) || (p == y && x == q)) //restriction exits
                 {
                     r = 0;
                     break;
@@ -65,7 +65,7 @@ class Solution
             ans.push_back(r);
             if (r)
             {
-                _union(a[0], a[1]);
+                _union(a[0], a[1]);//make them friend
             }
         }
         return ans;

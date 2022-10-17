@@ -1,9 +1,9 @@
 class Solution {
 public:
-    int ans;
-    void getAns(int n,int i,vector<vector<int>>&req,int cnt,vector<int>&vec){
+    // int ans;
+    int getAns(int n,int i,vector<vector<int>>&req,vector<int>&vec){
         if(i==req.size()){
-            int br=1;
+            int br=1,ans=-1e6;
             for(auto x:vec){
                 if(x>1){
                     br=0;
@@ -12,21 +12,22 @@ public:
             }
             if(br){
                 // cout<<cnt<<" ";
-                ans=max(ans,cnt);
+                return 0;
             }
-            return;
+            return ans;
         }
         vec[req[i][0]]--;
         vec[req[i][1]]++;
-        getAns(n,i+1,req,cnt+1,vec);
+        int v1=getAns(n,i+1,req,vec)+1;
         vec[req[i][0]]++;
         vec[req[i][1]]--;
-        getAns(n,i+1,req,cnt,vec);
+        int v2=getAns(n,i+1,req,vec);
+        return max(v1,v2);
     }
     int maximumRequests(int n, vector<vector<int>>& requests) {
         vector<int>vec(n,1);
-        ans=0;
-        getAns(n,0,requests,0,vec);
-        return ans;
+      
+      return  getAns(n,0,requests,vec);
+        
     }
 };

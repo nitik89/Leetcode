@@ -2,7 +2,7 @@ class Solution
 {
     public:
         int mod = 1e9 + 7;
-    int dp[31][(1<<11)+1];
+    int dp[31][(1<<11)+1];//we gave identity to the prime factors not by value but by the index so we optimized the space using this method
     long long getAns(vector<int> &nums, vector<int> &bm, int mask, vector< int > &count, int i)
     {
         if (i >= 31)
@@ -12,15 +12,15 @@ class Solution
         if(dp[i][mask]!=-1){
             return dp[i][mask];
         }
-        if (count[i] == 0 || bm[i] == 0)
+        if (count[i] == 0 || bm[i] == 0) //include exclude approach
         {
             return getAns(nums, bm, mask, count, i + 1);
         }
         long long res = 0;
-        if ((mask &bm[i]) == 0)
+        if ((mask &bm[i]) == 0) //if the factor does not exists already which is the mask which tells the whole story then we will be including this number into our answer
         {
             res = res % mod + (getAns(nums, bm, (mask | (bm[i])), count, i + 1) % mod *count[i] % mod) % mod;
-        }
+        }//the answer is formed by multiplying the count which denotes the set formation 
         res = res % mod + getAns(nums, bm, mask, count, i + 1);
         return dp[i][mask]=res % mod;
     }
@@ -58,7 +58,7 @@ class Solution
                     mask = mask | (1 << j);
                 }
             }
-            bm[i] = mask % mod;
+            bm[i] = mask % mod; //precomputing the mask of the factors of a number
         }
 
         for (auto x: nums)
@@ -72,7 +72,7 @@ class Solution
         int p=1;
         for(int i=0;i<count[1];i++){
             p=(p*2)%mod;
-            p=p%mod;
+            p=p%mod;  //we do not calculate for the ones expicilty but we calc pow of 2 of count of ones and then multiplied it with the answer
         }
         long long save = p*ans;
         return save%mod;

@@ -5,148 +5,61 @@ class Solution
     vector<int> rank;
     int find(int x)
     {
-        if (par[x] == x)
-        {
-            return x;
-        }
-        int y = find(par[x]);
-        par[x] = y;
-        return y;
+        if (par[x] != x) par[x] = find(par[x]);
+        return par[x];
     }
     void _union(int x, int y)
     {
-        int x1 = find(x);
-        int x2 = find(y);
-        if (x1 != x2)
-        {
-            par[x1]=x2;
-        }
-        else
-        {
-            return;
-        }
+        par[find(x)] = find(y);
     }
-    vector<int> findAllPeople(int n, vector<vector < int>> &met, int f) {
+    vector<int> findAllPeople(int n, vector<vector < int>> &met, int f)
+    {
         par.resize(n);
         rank.resize(n);
-        for(int i=0;i<n;i++){
-            par[i]=i;
-            rank[i]=1;
+        for (int i = 0; i < n; i++)
+        {
+            par[i] = i;
+            rank[i] = 1;
         }
-        map<int,vector<pair<int,int>>>mp;
-        int time=100001;
-        for(auto x:met){
-            mp[x[2]].push_back({x[0],x[1]});
+        _union(0, f);
+
+        map<int, vector<pair<int, int>>> mp;
+
+        for (auto x: met)
+        {
+            mp[x[2]].push_back({ x[0],
+                x[1] });
         }
-        for(auto x:mp){
-            for(auto &[a,b]:x.second){
-                if(a==f||a==0||b==0||b==f){
-                    time=x.first;
-                    break;
-                }
-            }
-            if(time!=100001){
-                break;
-            }
-        }
-        _union(f,0);
-       
-        int q=find(f);
-        int w=find(0);
-        unordered_set<int>st;
-        st.insert(0);
-        st.insert(f);
-        for(auto x:mp){
-            if(x.first>=time){
-            for(auto &[a,b]:x.second){
-                
-                int t=find(a);
-                int c=find(b);
-                
-                if(t==q||t==w||c==q||c==w){
-                _union(a,b);
+        vector<int> ans;
+
+        for (auto i: mp)
+        {
+            set<int> st;
+            for (auto &[a, b]: i.second)
+            {
+                int x1 = find(a);
+                int x2 = find(b);
+
+                _union(a, b);
                 st.insert(a);
                 st.insert(b);
-                }
-                q=find(f);
-                w=find(0);
-            } for(auto &[a,b]:x.second){
-                
-                int t=find(a);
-                int c=find(b);
-                
-                if(t==q||t==w||c==q||c==w){
-                _union(a,b);
-                st.insert(a);
-                st.insert(b);
-                }
-                q=find(f);
-                w=find(0);
             }
-                for(int k=x.second.size()-1;k>=0;k--){
-                    int a=x.second[k].first;
-                    int b=x.second[k].second;
-                     int t=find(a);
-                int c=find(b);
-                
-                if(t==q||t==w||c==q||c==w){
-                _union(a,b);
-                st.insert(a);
-                st.insert(b);
+            for (auto x: st)
+            {
+                if (find(x) != find(0))
+                {
+
+                    par[x] = x;
                 }
-                q=find(f);
-                w=find(0);
-                }
-                
-                for(int k=x.second.size()-1;k>=0;k--){
-                    int a=x.second[k].first;
-                    int b=x.second[k].second;
-                     int t=find(a);
-                int c=find(b);
-                
-                if(t==q||t==w||c==q||c==w){
-                _union(a,b);
-                st.insert(a);
-                st.insert(b);
-                }
-                q=find(f);
-                w=find(0);
-                }
-               
             }
         }
-        vector<int>ans;
-        
-        
-        
-        for(auto x:st){
-            int y=find(x);
-            
-            
-            
-                ans.push_back(x);
-            
+        for (int i = 0; i < n; i++)
+        {
+            if (find(i) == find(0))
+            {
+                ans.push_back(i);
+            }
         }
-        
-        
         return ans;
     }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

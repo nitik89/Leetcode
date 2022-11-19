@@ -1,43 +1,46 @@
 class Solution {
 public:
-   int memo[32768];
-    int dp(int mask,string& target,vector<vector<int>>& arr,int allmask)
-    {
-        if(mask==allmask)
+    int dp[(1<<15)];
+    int getAns(string &tr,vector<vector<int>>&vec,int all,int mask){
+        if(mask==all){
             return 0;
-        else if(memo[mask])
-            return memo[mask];
-        else
-        {
-            int q=51;
-            for(vector<int> word:arr)
-            {
-                int newMask=mask;
-                for(int i=0;i<target.length();++i)
-                    if((mask&1<<i)==0&&word[target[i]-'a'])
-                    {
-                        newMask|=1<<i;
-                        word[target[i]-'a']--;
-                    }
-                if(newMask!=mask)
-                    q=min(q,1+dp(newMask,target,arr,allmask));
+        }
+        if(dp[mask]!=-1){
+            return dp[mask];
+        }
+        
+        int ans=1e6;
+        for(vector<int> v:vec){
+        
+            
+            int nm=mask;
+            for(int i=0;i<tr.size();i++){
+                if((nm&(1<<i))==0 && v[tr[i] - 'a']){
+                    nm=nm|(1<<i);
+                    v[tr[i] - 'a']--;
+                }
             }
-            return memo[mask]=q;
+            if(nm!=mask){
+                
+                ans=min(ans,1+getAns(tr,vec,all,nm));
+            }
+            
         }
+        return dp[mask]=ans;
     }
-    int minStickers(vector<string>& stickers, string target) 
-    {
-        vector<vector<int>> arr(stickers.size());
-        memset(memo,0,sizeof(memo));
-        for(int i=0;i<stickers.size();++i)
-        {
-            vector<int> c(26,0);
-            for(char a:stickers[i])
-                c[a-'a']++;
-            arr[i]=c;
+    int minStickers(vector<string>& st, string tr) {
+        memset(dp,-1,sizeof dp);
+        int n=st.size();
+        int m=tr.size();
+        vector<vector<int>>vec(n,vector<int>(26,0));
+        for(int i=0;i<n;i++){
+            string str=st[i];
+            for(auto x:str){
+                vec[i][x - 'a']++;
+            }
         }
-        int allmask=(1<<target.length())-1;
-        int val=dp(0,target,arr,allmask);
-        return val<51?val:-1;
+        int allmask=(1<<m)-1;
+        int s=getAns(tr,vec,allmask,0);
+        return s==1e6?-1:s;
     }
 };

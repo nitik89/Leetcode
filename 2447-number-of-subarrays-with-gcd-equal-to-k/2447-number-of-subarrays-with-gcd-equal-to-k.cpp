@@ -7,6 +7,7 @@ public:
         for(int i=0;i<n;i++){
             int p=nums[i];
             for(int j=i;j<n;j++){
+                if(p%k!=0)break;
                 p=__gcd(p,nums[j]);
                 if(p==k){
                  ans++;   

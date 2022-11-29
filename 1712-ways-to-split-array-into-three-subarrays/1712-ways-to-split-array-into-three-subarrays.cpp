@@ -48,7 +48,7 @@ class Solution
         for (int i = 0; i < n - 2; i++)
         {
             int lf = getLf(nums, i + 1, n - 2, i);
-            if (lf == -1) {
+            if (lf == -1) { //why for this thing
                 continue;
             }
             int rg = getRg(nums, lf, n - 2, i, n);
